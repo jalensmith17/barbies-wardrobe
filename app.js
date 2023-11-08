@@ -32,6 +32,10 @@ const careerDescriptions = [
     {
         name: 'influencer',
         description: 'talk about stuff on social media and people say wow and i get paid'
+    },
+    {
+        name: 'chef',
+        description: 'cooks trash food for people'
     }
 ]
 const careerIncomes = [
@@ -72,6 +76,8 @@ class Clothing {
 }
 
 const birkin = new Clothing('Birkin Bag', 'Hermes', 'purple', 'bag', 'lg', 15470 )
+const pradaBoots = new Clothing('Prada Boots', 'Prada', 'black', 'boots', '5', 3450 )
+const redBottoms = new Clothing('Red Bottoms', 'Christian Louboutin', 'black', 'shoes', '6', 3000)
 
 
 
@@ -131,3 +137,26 @@ workButton.addEventListener('click', ()=>{
     barbie.render();
 })
 
+const pbButton = document.getElementById('prada-boots');
+
+pbButton.addEventListener('click', ()=>{
+    if(barbie.wallet >= pradaBoots.price){
+        barbie.wardrobe.push(pradaBoots);
+        barbie.wallet -= pradaBoots.price;
+        barbie.render();
+    } else {
+        alert('We know you really ain\'t got it like that');
+    }
+})
+
+const rbButton = document.getElementById('red-bottoms');
+
+rbButton.addEventListener('click', ()=>{
+    if(barbie.wallet >= redBottoms.price){
+        barbie.wardrobe.push(redBottoms);
+        barbie.wallet -= redBottoms.price;
+        barbie.render();
+    } else {
+        alert('We know you really ain\'t got it like that');
+    }
+})
