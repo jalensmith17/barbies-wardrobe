@@ -64,6 +64,11 @@ button {
   padding: 10px;
 }
 
+button:hover {
+  background-color: #FE529E;
+  color: #F6F2E9;
+}
+
 .button-container {
   padding: 10px;
   display: grid;

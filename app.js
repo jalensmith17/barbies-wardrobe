@@ -225,7 +225,7 @@ const sellWardrobe = document.getElementById('sell-clothes');
 sellWardrobe.addEventListener('click', ()=>{
     if(barbie.wardrobe.length > 0){
         const item = barbie.wardrobe.pop();
-        const randomMultiplier = Math.random() * 1.3 + 0.7;
+        const randomMultiplier = Math.floor(Math.random() * 1.3 + 0.7) + 1;
         barbie.wallet += item.price * randomMultiplier;
         barbie.render();
     } else {
