@@ -5,6 +5,7 @@ const barbie = {
     name: 'Barbie',
     wardrobe: [],
     portfilio: [],
+    garage: [],
     wallet: 0
 }
 
@@ -118,6 +119,18 @@ barbie.render = () => {
         })).join('')
     }</ul>
     </div>
+    <div> <h2>Garage Contains: </h2> 
+    <ul>${
+        barbie.garage.map((item => {
+            return `<li>
+            ${barbie.name} has a ${item.color}
+            ${item.make} ${item.model}
+            that is worth $${item.price} and
+            takes out $${item.income} a week.
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
 `;
 }
 
@@ -217,6 +230,33 @@ sellWardrobe.addEventListener('click', ()=>{
         barbie.render();
     } else {
         alert('You ain\'t got no clothes to sell!');
+    }
+})
+
+//car functionality
+
+class Car {
+    constructor(make, model, color, price, income){
+        this.make = make;
+        this.model = model;
+        this.color = color;
+        this.price = price;
+        this.income = income;
+    }
+}
+
+const pinkTesla = new Car('Tesla', 'Model S', 'pink', 50000, 150);
+
+const ptButton = document.getElementById('buy-tesla');
+
+ptButton.addEventListener('click', ()=>{
+    if(barbie.wallet >= pinkTesla.price){
+        barbie.garage.push(pinkTesla);
+        barbie.wallet -= pinkTesla.price;
+        barbie.career.income -= pinkTesla.income;
+        barbie.render();
+    } else {
+        alert('Work harder, you can\'t afford this car!');
     }
 })
 
