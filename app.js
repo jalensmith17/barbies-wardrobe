@@ -204,3 +204,19 @@ bdhButton.addEventListener('click', ()=>{{
         alert('We know you really ain\'t got it like that');
     }
 }})
+
+//selling wardrobe functionality
+
+const sellWardrobe = document.getElementById('sell-clothes');
+
+sellWardrobe.addEventListener('click', ()=>{
+    if(barbie.wardrobe.length > 0){
+        const item = barbie.wardrobe.pop();
+        const randomMultiplier = Math.random() * 1.3 + 0.7;
+        barbie.wallet += item.price * randomMultiplier;
+        barbie.render();
+    } else {
+        alert('You ain\'t got no clothes to sell!');
+    }
+})
+
