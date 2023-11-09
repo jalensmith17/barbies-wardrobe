@@ -4,6 +4,7 @@ console.log('App is connected');
 const barbie = {
     name: 'Barbie',
     wardrobe: [],
+    portfilio: [],
     wallet: 0
 }
 
@@ -105,6 +106,18 @@ barbie.render = () => {
         })).join('')
     }</ul>
     </div>
+    <div> <h2>Portfolio Contains: </h2> 
+    <ul>${
+        barbie.portfilio.map((item => {
+            return `<li>
+            ${barbie.name} has a ${item.name}
+            located in ${item.location}
+            that is worth $${item.price} and
+            brings in $${item.income} a week.
+            </li>`
+        })).join('')
+    }</ul>
+    </div>
 `;
 }
 
@@ -137,6 +150,8 @@ workButton.addEventListener('click', ()=>{
     barbie.render();
 })
 
+//prada boots functionality
+
 const pbButton = document.getElementById('prada-boots');
 
 pbButton.addEventListener('click', ()=>{
@@ -149,6 +164,8 @@ pbButton.addEventListener('click', ()=>{
     }
 })
 
+//red bottoms functionality
+
 const rbButton = document.getElementById('red-bottoms');
 
 rbButton.addEventListener('click', ()=>{
@@ -160,3 +177,30 @@ rbButton.addEventListener('click', ()=>{
         alert('We know you really ain\'t got it like that');
     }
 })
+
+//property functionality
+
+class Property {
+    constructor(name, location, price, mortgage, income) {
+        this.name = name;
+        this.location = location;
+        this.price = price;
+        this.mortgage = mortgage;
+        this.income = income
+    }
+}
+
+const barbieDreamHouse = new Property('Barbie Dream House', 'Malibu', 50000, 3000, 500);
+
+const bdhButton = document.getElementById('barbie-dream-house');
+
+bdhButton.addEventListener('click', ()=>{{
+    if(barbie.wallet >= barbieDreamHouse.price){
+        barbie.portfilio.push(barbieDreamHouse);
+        barbie.wallet -= barbieDreamHouse.price;
+        barbie.career.income += barbieDreamHouse.income;
+        barbie.render();
+    } else {
+        alert('We know you really ain\'t got it like that');
+    }
+}})
