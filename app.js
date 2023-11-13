@@ -20,23 +20,23 @@ class Career {
 
 const careerDescriptions = [
     {
-        name: 'lawyer',
+        name: 'Lawyer',
         description: 'works as an attorney of a high end law firm'
     },
     {
-        name: 'software-engineer',
+        name: 'Software Engineer',
         description: 'solves software related problems and build application architecture.'
     },
     {
-        name: 'doctor',
+        name: 'Doctor',
         description: 'helps people with their boo boos'
     },
     {
-        name: 'influencer',
+        name: 'Influencer',
         description: 'talk about stuff on social media and people say wow and i get paid'
     },
     {
-        name: 'chef',
+        name: 'Chef',
         description: 'cooks trash food for people'
     }
 ]
@@ -57,14 +57,31 @@ const randomization = (limit) => {
 }
 
 
-for (let i = 10 ; i > 0; i--){
- const job = careerDescriptions[randomization(careerDescriptions.length)]
+for (let i = 5 ; i > 0; i--){
+ const job = careerDescriptions[careerDescriptions.length - i];
  const income = careerIncomes[randomization(careerIncomes.length)];
  careers.push(new Career(job.name, job.description, income, `${job.name}-${income}` ))
 }
 
 
 barbie.career = careers[randomization(careers.length)]
+
+//change career functionality
+const careerSelect = document.getElementById('career-select');
+careers.forEach((career)=>{
+    const option = document.createElement('option');
+    option.value = career.id;
+    option.innerText = career.name;
+    careerSelect.appendChild(option);
+})
+
+careerSelect.addEventListener('change', (event)=>{
+    const career = careers.find((career)=>{
+        return career.id === event.target.value
+    })
+    barbie.career = career;
+    barbie.render();
+})
 
 class Clothing {
     constructor(name, designer, color, type, size, price){
@@ -134,9 +151,7 @@ barbie.render = () => {
 `;
 }
 
-barbie.render()
-
-
+barbie.render();
 
 const birkinButton = document.getElementById('birkin');
 
