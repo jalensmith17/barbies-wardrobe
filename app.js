@@ -1,10 +1,12 @@
 console.log('App is connected');
 
+let sellBtns;
+
 // Protagonist of our application
 const barbie = {
     name: 'Barbie',
     wardrobe: [],
-    portfilio: [],
+    portfolio: [],
     garage: [],
     wallet: 0
 }
@@ -120,13 +122,14 @@ barbie.render = () => {
             ${item.name} made by ${item.designer}
             that is worth ${item.price} in size 
             ${item.size} 
-            </li>`
+            </li>
+            <button class="sell-btn">Sell</button>`
         })).join('')
     }</ul>
     </div>
     <div> <h2>Portfolio Contains: </h2> 
     <ul>${
-        barbie.portfilio.map((item => {
+        barbie.portfolio.map((item => {
             return `<li>
             ${barbie.name} has a ${item.name}
             located in ${item.location}
@@ -149,6 +152,10 @@ barbie.render = () => {
     }</ul>
     </div>
 `;
+
+sellBtns = document.querySelectorAll('.sell-btn');
+console.log(sellBtns);
+sellBtnListener(sellBtns);
 }
 
 barbie.render();
@@ -206,6 +213,19 @@ rbButton.addEventListener('click', ()=>{
     }
 })
 
+const sellRbButton = document.getElementById('rb-sell');
+
+sellRbButton.addEventListener('click', () => {
+    const index = barbie.wardrobe.indexOf(redBottoms);
+    if (index !== -1) {
+        barbie.wardrobe = barbie.wardrobe.slice(0, index).concat(barbie.wardrobe.slice(index + 1));
+        barbie.wallet += redBottoms.price * (Math.floor(Math.random() * 1.3 + 0.7)+1)
+        barbie.render();
+    } else {
+        alert("You do not have any Red Bottom items to sell!");
+    }
+});
+
 //property functionality
 
 class Property {
@@ -222,16 +242,30 @@ const barbieDreamHouse = new Property('Barbie Dream House', 'Malibu', 50000, 300
 
 const bdhButton = document.getElementById('barbie-dream-house');
 
-bdhButton.addEventListener('click', ()=>{{
+bdhButton.addEventListener('click', ()=>{
     if(barbie.wallet >= barbieDreamHouse.price){
-        barbie.portfilio.push(barbieDreamHouse);
+        barbie.portfolio.push(barbieDreamHouse);
         barbie.wallet -= barbieDreamHouse.price;
         barbie.career.income += barbieDreamHouse.income;
         barbie.render();
     } else {
         alert('We know you really ain\'t got it like that');
     }
-}})
+})
+
+const sellRentalButton = document.getElementById('rental-sell');
+
+sellRentalButton.addEventListener('click', ()=>{
+    if(barbie.portfolio.includes(barbieDreamHouse)){
+        barbie.portfolio.pop(barbieDreamHouse);
+        barbie.wallet += barbieDreamHouse.price * (Math.floor(Math.random() * 1.3 + 0.7)+1);
+        barbie.career.income -= barbieDreamHouse.income;
+        barbie.render();
+    } else {
+        alert("You do not have any Portfolio items to sell!")
+    }
+})
+
 
 //selling wardrobe functionality
 
@@ -275,3 +309,30 @@ ptButton.addEventListener('click', ()=>{
     }
 })
 
+function sellBtnListener(buttons) {
+    buttons.forEach((btn, index) => {
+        btn.addEventListener("click", ()=> {            
+            sellItem(index)
+        })
+    })
+}
+
+
+function sellItem(itemIdx) {
+
+    // calculate sell price
+
+    const randomMultiplier = Math.floor(Math.random() * 1.3 + 0.7) + 1;
+    const earnings = barbie.wardrobe[itemIdx].price * randomMultiplier;
+    barbie.wallet += earnings;
+
+    // remove item from wardrobe
+    barbie.wardrobe.splice(barbie.wardrobe[itemIdx],1);
+    console.log(barbie.wardrobe);
+
+    barbie.render();
+
+
+
+
+}
